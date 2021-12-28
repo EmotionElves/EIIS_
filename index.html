@@ -1,81 +1,647 @@
 <!DOCTYPE html>
-<!--
-	NOTES:
-	1. All tokens are represented by '$' sign in the template.
-	2. You can write your code only wherever mentioned.
-	3. All occurrences of existing tokens will be replaced by their appropriate values.
-	4. Blank lines will be removed automatically.
-	5. Remove unnecessary comments before creating your template.
--->
 <html>
+<title>HTML Tutorial</title>
 <head>
-<meta charset="UTF-8">
-<meta name="authoring-tool" content="Adobe_Animate_CC">
-<title>home</title>
-<!-- write your code here -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://kit.fontawesome.com/95c381f9f0.js" crossorigin="anonymous"></script>
+
 <style>
-  #animation_container {
-	position:absolute;
-	margin:auto;
-	left:0;right:0;
-	top:0;bottom:0;
-  }
-</style>
-<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-<script src="home.js"></script>
-<script>
-var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
-function init() {
-	canvas = document.getElementById("canvas");
-	anim_container = document.getElementById("animation_container");
-	dom_overlay_container = document.getElementById("dom_overlay_container");
-	var comp=AdobeAn.getComposition("DCE466A9A4EE437686A9473514ADC0CA");
-	var lib=comp.getLibrary();
-	var loader = new createjs.LoadQueue(false);
-	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
-	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
-	var lib=comp.getLibrary();
-	loader.loadManifest(lib.properties.manifest);
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400&display=swap');
+* {
+  box-sizing: border-box;
 }
-function handleFileLoad(evt, comp) {
-	var images=comp.getImages();	
-	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
+html {
+  scroll-behavior: smooth;
 }
-function handleComplete(evt,comp) {
-	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
-	var lib=comp.getLibrary();
-	var ss=comp.getSpriteSheet();
-	var queue = evt.target;
-	var ssMetadata = lib.ssMetadata;
-	for(i=0; i<ssMetadata.length; i++) {
-		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
-	}
-	exportRoot = new lib.home40();
-	stage = new lib.Stage(canvas);
-	stage.enableMouseOver();	
-	//Registers the "tick" event listener.
-	fnStartAnimation = function() {
-		stage.addChild(exportRoot);
-		createjs.Ticker.framerate = lib.properties.fps;
-		createjs.Ticker.addEventListener("tick", stage);
-		stage.addEventListener("tick", stage._handleTick);
-	}	    
-	//Code to support hidpi screens and responsive scaling.
-	AdobeAn.makeResponsive(true,'both',false,1,[canvas,anim_container,dom_overlay_container]);	
-	AdobeAn.compositionLoaded(lib.properties.id);
-	fnStartAnimation();
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 12px;
+  color: #fff;
+  letter-spacing: 7px;
+  background-color: #000000;
+  width: 1920px;
+  overflow-x: hidden;
+  overflow-y: auto; 
 }
-</script>
-  <video class="video" muted autoplay loop>
-        <source src="bgvideo.mp4" type="video/mp4" />
-    </video>
-<!-- write your code here -->
+
+
+video {
+  width: 1920px;
+  height: 1080px;
+  position: fixed;
+  margin:0px auto;
+  z-index: -3;
+  top: 0;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 0px;
+  height: 50px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.home {
+  margin-top:-30px;
+    margin-left: 130px;
+    width: 1600px;
+    height: 1080px;
+    background-image: url("homesprites.png");
+                -webkit-animation: play 3s steps(12) infinite alternate;
+                        animation: play 3s steps(12) infinite alternate;
+}
+
+@-webkit-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -23280px; }
+}
+
+@keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -23280px; }
+}
+/*左側選單*/
+.sidenav {
+  width: 240px;
+  position: sticky;
+  z-index: 2;
+  top: 300px;
+  left: 75px;
+  background: none;
+  overflow-x: hidden;
+  padding: 8px 0;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #fff;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #87c9db;
+  
+}
+
+.sidenav a:active {
+  color: #87c9db;
+  
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+/*左側選單*/
+
+.aboutdiv{
+  width: 550px;
+  height: 680px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #fff;
+  margin-top: 50px;
+  margin-bottom: 500px;
+  padding-left: 10px;
+  display: inline-block;
+  z-index: 1;
+}
+
+.artip{
+  width: 400px;
+  height: 400px;
+  margin-top: 150px;
+  margin-left: 60px;
+  display: inline-block;
+  z-index: 1;
+  text-align: center;
+  font-size: 20px;
+}
+
+/*角色頁版塊*/
+.infodiv {
+  width: 305px;
+  height: 417px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff;
+  position: absolute;
+  display: inline-block;
+  padding: 30px 40px 30px 40px;
+  z-index: 2;
+  margin-left: 774px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 50px;
+  margin-top: 60px;
+}
+.ardiv {
+  width: 380px;
+  height: 380px;
+  border-style: solid;
+  border-radius: 50%;
+  border-width: 1px;
+  border-color: #fff;
+  position: absolute;
+  display: inline-block;
+  padding: 5px;
+  z-index: 2;
+  margin-left: 1160px;
+  margin-top: 80px;
+}
+.tabdiv {
+  width: 740px;
+  height: 417px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff;
+  position: absolute;
+  display: inline-block;
+  padding: 35px 50px 35px 50px;
+  z-index: 2;
+  margin-left: 1117px;
+  margin-top: 580px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 50px;
+}
+.bgimg1 {
+  height: 1000px;
+  width: auto;
+  position: relative;
+  z-index: -1;
+  margin-left: 150px;
+  margin-top: 60px;
+}
+.bgimg2 {
+  height: auto;
+  width: 1000px;
+  position: relative;
+  z-index: -1;
+  margin-left: 150px;
+  margin-top: 60px;
+}
+.name {
+  font-size: 300px;
+  margin-top: 610px;
+  margin-left: 50px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.4;
+}
+.smallname {
+  font-size: 150px;
+  color: #fff;
+  opacity: 0.6;
+  display: inline-block;
+  z-index: 3;
+  position: absolute;
+  margin-left: 1540px;
+  margin-top: 160px;
+}
+.rimg {
+  border: 1px solid #fff;
+  border-radius: 50%;
+  width: 363px;
+  height: 363px;
+}
+
+.intro {
+  font-size: 80px;
+  color: #fff;
+  opacity: 0.6;
+  display: inline;
+  z-index: 2;
+  position: absolute;
+  margin-left: 1180px;
+  margin-top: 470px;
+}
+.footer {
+  height: 1080px;
+  width: auto;
+  text-align: center;
+  font-size: 40px;
+  padding-top: 310px;
+}
+.boboimg {
+  height: 600px;
+  width: auto;
+  position: absolute;
+  z-index: 1;
+}
+</style>	
 </head>
-<body onload="init();" style="margin:0px;">
-	<div id="animation_container" style="background-color:rgba(255, 255, 255, 0.00); width:1920px; height:1080px">
-		<canvas id="canvas" width="1920" height="1080" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 0.00);"></canvas>
-		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:1920px; height:1080px; position: absolute; left: 0px; top: 0px; display: block;">
-		</div>
-	</div>
+<body>
+<video class="video" muted autoplay loop>
+        <source src="bgvideo.mp4" type="video/mp4" />
+</video>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
+<div id="top" class="home"></div>
+<p style="font-size: 28px;z-index: 3;text-align: right;margin-top: -120px;margin-right: 250px;">- Scroll down -</p>
+<br><br><br><br>
+<!--ＬＯＧＯ-->
+<div style="position: sticky;top: 90px;margin-left: 50px;z-index: 2;">
+	<a href="#top"><img src="image/logo.png" style="width: 360px;height: 127px;"></a>
+	<div style="margin-left: 32px">
+		<br><br>
+    <a href="https://www.facebook.com/EmotionElves" target="_blank">
+  <i class="fab fa-facebook-square" style="color: #fff;font-size: 20px;margin-left: 2px;"></i></a>
+<a href="https://www.instagram.com/emotionelves/" target="_blank">
+  <i class="fab fa-instagram-square" style="color: #fff;font-size: 20px;"></i></a>
+  <div style="border-top: 1px solid #fff;margin-top: 15px;width: 150px;"></div>
+</div>
+</div>
+<!--角色選單-->
+<div class="sidenav">
+  <a href="#about">關於情緒精靈</a>
+  <br>
+  <a href="#artip">ＡＲ使用說明</a>
+<br><br>
+  <p style="color: #fff;margin-left: 17px;font-size: 20px;">角色介紹選單</p>
+  <div style="border-top: 1px solid #fff;margin: 15px;"></div>
+ <div class="row">
+ 	<div class="column">
+  <a href="#good">善意</a>
+   </div>
+    	<div class="column">
+  <a href="#bad">惡意</a>
+  </div>
+   	<div class="column">
+  <a href="#true0">真誠</a>
+  </div>
+   	<div class="column">
+  <a href="#fake">虛假</a>
+  </div>
+   	<div class="column">
+  <a href="#patience">忍耐</a>
+  </div>
+   	<div class="column">
+  <a href="#crazy">放縱</a>
+  </div>
+   	<div class="column">
+  <a href="#happy">快樂</a>
+  </div>
+   	<div class="column">
+  <a href="#angry">憤怒</a>
+  </div>
+   	<div class="column">
+  <a href="#sad">悲傷</a>
+  </div>
+   	<div class="column">
+  <a href="#like">喜歡</a>
+  </div>
+   	<div class="column">
+  <a href="#hate">討厭</a>
+</div>
+  </div>
+</div>
+<!--角色選單-->
+
+
+
+<a href="#top">
+  <i class="fas fa-arrow-up" style="color: #87c9db;font-size: 300px;position: fixed;z-index: 3;margin-right: 80px;margin-top: 500px;text-align: right;"></i></a>
+<!--關於頁-->
+<div id="about"></div>
+  <div style="text-align: center;font-size: 20px;">
+<h2 style="font-size: 40px;margin-top: 100px;text-align: right;margin-right: 15px;" data-aos="fade-left">關於情緒精靈</h2>
+<div style="border-top: 1px solid #fff;" data-aos="zoom-out-up"></div>
+  <div class="aboutdiv" style="margin-left: 400px;" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+    <br><br>
+    <h2>作品介紹</h2>
+    <br>
+      <p>情緒精靈是以情緒為發想的創作</p>
+      <p>以形象化的表現將情緒賦予形體</p>
+      <p>構築角色與角色間的關係與互動</p>
+      <p>於社群平台上發布系列故事創作</p>
+      <div style="font-size: 100px;margin-top: 30px;">
+ <a href="https://www.facebook.com/EmotionElves" target="_blank">
+  <i class="fab fa-facebook" style="color: #fff;"></i></a>
+<a href="https://www.instagram.com/emotionelves/" target="_blank">
+  <i class="fab fa-instagram" style="color: #fff;margin-left: 20px;"></i></a>
+</div>
+  </div>
+  <div class="aboutdiv" style="margin-left: 60px;background-color: #fff;color: #87c9db;" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+    <br><br>
+    <h2>創作理念</h2>
+    <br>
+    <p>將故事背景設定在深水</p>
+    <p>是因為情緒就像水一樣</p>
+    <p>可以優游，也可以沈溺</p>
+    <p>情緒和情緒之間會互動</p>
+    <p>有自己的社群及生活圈</p>
+    <p>也能夠獨立思考及說話</p>
+    <p>因為是否被需要而強大</p>
+
+  </div>
+</div>
+<!--關於頁-->
+
+<div id="artip"></div>
+
+  <h2 style="font-size: 40px;margin-top: 100px;text-align: right;" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">AR使用說明</h2>
+ <div style="border-top: 1px solid #fff;" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom"></div>
+
+  <div class="artip" style="margin-left: 450px;padding: 0 0 0 80px;" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+    <img src="image/makarlogo.png" style="width: 256px;height: auto;">
+    <p>手機下載APP「MAKAR」</p>
+  </div>
+  <div class="artip" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+    <img src="image/qrcode.jpeg">
+    <p>掃描QRcode或APP內搜尋「Emotion Elves」</p>
+  </div>
+  <div class="artip" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+    <div style="border-style: solid;border-width: 1px;width: 256px;height: 256px;margin-left: 65px;margin-bottom: 60px;">
+    <h2 style="font-size: 150px;">AR</h2>
+     <br>  <br>
+    </div>
+    <p>打開專案掃描網站內對應圖像</p>
+  </div>
+
+
+
+<div id="good" style="margin-top: 300px;"></div>
+<div style="margin-top: 60px;">
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>善意就像光點 即便微乎其微 也足以讓世界 不會陷入黑暗 善意不會沈溺 他仍嚮往光明</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">善意</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rgood.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>善意是最早出生的精靈之一，曾經是最強大的精靈，但因爲被人類遺忘而日漸衰弱。愛著人類，會因為他人的傷痛而哭泣。會因為他人的喜悅而欣喜。和惡意是並肩卻又對立的關係，與真誠和忍耐結合會成為「希望」，和虛假結合會成為「偽善」，但人們經常將他們搞混。</p>
+</div>
+<p class="name">善意</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 750px;margin-top: -130px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/goodmain.png" class="bgimg1" style="margin-left: 190px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+</div>
+
+<div id="bad" style="margin-top: 300px;"></div>
+  
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>惡意就像沼澤 即便輕輕踏足 也依舊會深陷 漸漸的被吞噬 無止盡的折磨 連掙扎也放棄</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">惡意</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rbad.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>惡意和善意同為最早出生的精靈，因爲越來越被人類需要而日漸壯大，取代了善意，成為了現今最強大的情緒精靈。什麼都不在乎，對於傷害他人感到麻木，對於善意為他人哭泣的行為感到無法理解。覺得除了善意以外的精靈都是廢物，與虛假和放縱結合會成為「絕望」。</p>
+</div>
+<p class="name">惡意</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 550px;margin-top: -50px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/badmain.png" class="bgimg1" style="margin-left: 340px;height: 1100px;margin-top: -110px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="true0" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>真誠就像清流 得以洗淨濁泥 坦然映照日月 即便凝視深淵 仍然向著光明 無畏追尋出口</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">真誠</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rtrue0.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>和虛假是雙生精靈，彼此相同而又相反，雖是手足，卻無法同時出現。被虛假畏懼，有原則與堅持，和忍耐與善意是摯友，會阻止虛假接近善意，雖然經常受到惡意傷害，卻不曾畏懼惡意，純粹而又強大，是「快樂」、「悲傷」和「憤怒」等無法獨立存在精靈的存在條件。</p>
+</div>
+<p class="name">真誠</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 700px;margin-top: 50px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/true0main.png" class="bgimg1" style="margin-left: 280px;height: 1100px;margin-top: -80px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="fake" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>虛假就像沙塵 足以覆蓋真實 卻仍害怕颳風 逕自吹淨陰霾 於是自顧自的 選擇放棄沈溺</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">虛假</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rfake.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>和真誠是雙生精靈，近代越來越頻繁出現，能夠否定所有精靈的存在，混淆是非。雖然出現頻繁，卻始終無法變得強大，膽小而脆弱，害怕真實，對善意有近乎瘋狂的執著，平時都戴著面具，真實的想法不得而知，享受和善意結合成為「偽善」的時候，但一直被真誠阻止。</p>
+</div>
+<p class="name">虛假</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 500px;margin-top: 100px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/fakemain.png" class="bgimg2" style="margin-left: 100px;margin-top: -90px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="patience" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>忍耐閉氣沈溺 像無聲的戰鬥 蟄伏茫茫深海 在等待中沈浮 雖然看似痛苦 卻不曾被吞噬</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">忍耐</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rln.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>和放縱是雙生精靈，和放縱並存，卻又互相制約，安靜而雋永，因為出現的條件較苛刻而較少被需要，但一旦被需要就會十分強大，能左右事件的走向。和善意與真誠是摯友，雖然和放縱對立卻很照顧放縱，受到惡意欺凌但卻不曾動搖，不會因為外在環境而改變自我原則。</p>
+</div>
+<p class="name">忍耐</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 500px;margin-top: 20px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/lnmain.png" class="bgimg2" style="margin-left: 100px;margin-top: 180px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="crazy" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>放縱就像煙花 恣意狂亂綻放 看似光彩炫目 卻不曾被留下 因為已經沈溺 所以無所畏懼</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">放縱</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rcrazy.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>和忍耐是雙生精靈，恣意妄為，想做什麼就做什麼，不顧後果，不管別人會不會受到傷害，只聽忍耐的話，和忍耐互相制衡，和虛假會一起玩，對其他精靈有增益作用，會放大情緒，不受控制，有時會暴走，和善意沒有交集，親近惡意，但在惡意欺負忍耐時選擇保護忍耐。</p>
+</div>
+<p class="name">放縱</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 450px;margin-top: -80px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/crazymain.png" class="bgimg2" style="margin-left: 100px;margin-top: 380px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="happy" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>快樂容易沉浸 浸泡在不覺裡 雖然無意沈溺 醉於海忘了醒 不是不會淹沒 只是還能掙扎</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">快樂</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rhappy.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>無法獨立存在的精靈之一，必須有真誠才能達成存在條件，是容易被影響，也容易感染他人的表層情緒。和悲傷與憤怒是同伴，本身沒有善惡，和善意結合會成為「喜悅」，和惡意結合會成為「嘲笑」。會因為忍耐和放縱的影響而強烈或收斂，容易被放縱影響而變得癲狂。</p>
+</div>
+<p class="name">快樂</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 350px;transform:scaleX(-1);" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/happymain.png" class="bgimg1" style="margin-left: 190px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="angry" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>憤怒燃燒他人 用以武裝自我 斥喝假代溫暖 自找陷入痛苦 即便錯誤方法 還掙扎著清醒</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">憤怒</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rangry.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>無法獨立存在的精靈之一，必須有真誠才能達成存在條件，是容易被影響，也容易感染他人的表層情緒。和快樂與憤怒是同伴，本身沒有善惡，和善意結合會成為「正義」，和惡意結合會成為「暴力」。會因為忍耐和放縱的影響而強烈或收斂，容易被放縱影響而變得狂暴。</p>
+</div>
+<p class="name">憤怒</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 300px;margin-top: -50px;transform:scaleX(-1);" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/angrymain.png" class="bgimg1" style="margin-left: 170px;height: 1100px;margin-top: -20px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="sad" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>悲傷彷彿雨落 也許渺渺煙雨 也曾大雨滂沱 可能無力自拔 即便近乎淹沒 還能努力掙脫</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">悲傷</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rsad.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>無法獨立存在的精靈之一，必須有真誠才能達成存在條件，是容易被影響，也容易感染他人的表層情緒。和快樂與憤怒是同伴，本身沒有善惡，和善意結合會成為「慈悲」，和惡意結合會成為「哀怨」。會因為忍耐和放縱的影響而強烈或收斂，容易被放縱影響而變得狷狂。</p>
+</div>
+<p class="name">悲傷</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 400px;transform:scaleX(-1);" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/sadmain.png" class="bgimg1" style="margin-left: 200px;height: 1150px;margin-top: -100px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="like" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>喜歡像花一樣 開時燦爛芬芳 清淡而又香甜 卻是誘人深陷 轉瞬成為牢籠 還仍想要掙扎</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">喜歡</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rlike.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>和討厭同為特殊存在的精靈，純粹，卻能輕易地左右人的行為。總是無預期的出現，而又突然消失，抓不住又放不掉，容易變質，近代成為了能獨立誘發行為的依據。喜歡討厭，會發出HOHOHO的聲音，總是傻笑，和善意結合會成為「愛」，和放縱結合會成為「執著」。</p>
+</div>
+<p class="name">喜歡</p>
+<img src="image/bobo.png" class="boboimg" style="margin-left: 680px;margin-top: -30px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/likemain.png" class="bgimg1" style="margin-left: 250px;height: 1150px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div id="hate" style="margin-top: 500px;"></div>
+
+<div class="infodiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p>討厭就像荊棘 刺傷他人同時 亦綑綁著自己 複雜而又純粹 容易深陷水中 卻不至於沈溺</p>
+</div>
+<p class="smallname" style="opacity: 0.4;">討厭</p>
+<p class="smallname" style="font-size: 100px;margin-top: 330px;margin-left: 1450px;">AR</p>
+<div class="ardiv" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <img src="image/rhate.png" class="rimg">
+</div>
+<p class="intro">角色介紹</p>
+<div class="tabdiv" data-aos="fade-up"
+     data-aos-anchor-placement="center-bottom">
+  <p>和喜歡同為獨立於其他精靈以外的存在，近代強大到能以一己之力左右人的行為，是極不穩定的存在，容易出現也容易消失。討厭喜歡，卻又經常和喜歡在一起。自身不強烈，但在與其他精靈結合後會變得十分強烈，與惡意結合會成為「恨」，和放縱結合會成為「執著」。</p>
+</div>
+<p class="name">討厭</p>
+<img src="image/bobo.png" class="boboimg" style="transform:scaleX(-1);margin-left: 300px;margin-top: -40px;" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+<img src="image/hatemain.png" class="bgimg1" style="margin-left: 160px;margin-top: -20px;" data-aos="fade-down"
+     data-aos-anchor-placement="center-bottom">
+
+<div class="footer" data-aos="zoom-out-up"
+     data-aos-anchor-placement="bottom-bottom">
+  <p style="margin-left: 128px;margin-top: 120px;">更多關於情緒精靈</p>
+ <div style="font-size: 100px;margin-top: 30px;margin-left: 120px;">
+ <a href="https://www.facebook.com/EmotionElves" target="_blank">
+  <i class="fab fa-facebook" style="color: #fff;"></i></a>
+<a href="https://www.instagram.com/emotionelves/" target="_blank">
+  <i class="fab fa-instagram" style="color: #fff;margin-left: 20px;"></i></a>
+</div>
+<div style="height: 80px;background-color: ;margin-top: 400px;color: #fff;text-align: right;border-top: 1px solid #fff;">
+  <p style="margin-right: 20px;padding-top: 20px;font-size: 20px;">2021.01.03 @ Emotion Elves</p>
+</div>
+</div>
 </body>
+
 </html>
